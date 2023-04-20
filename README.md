@@ -45,3 +45,16 @@ but first select your project created in firebase from the top dropdown on googl
 package like redux to manage global state
 
 >npm install recoil
+
+## react-MODAL
+>npm install --save react-modal
+
+## Important bug
+
+NEXT_PUBLIC_FIREBASE_  needs to be added for all firebase keys in .env file
+
+By default all environment variables loaded through .env.local are only available in the Node.js environment (in methods like getStaticProps), meaning they won't be exposed to the browser.
+
+In order to expose a variable to the browser, you have to prefix the variable with NEXT_PUBLIC_. For example:
+
+NEXT_PUBLIC_ANALYTICS_ID=abcdefghijk

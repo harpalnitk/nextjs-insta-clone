@@ -12,7 +12,7 @@ import { useRecoilState } from 'recoil';
 
 export default function Header() {
   const { data: session, status } = useSession();
-  console.log('session', session);
+  //console.log('session', session);
   //for modal functionality using recoil redux like package
   const [open, setOpen] = useRecoilState(modalState);
 

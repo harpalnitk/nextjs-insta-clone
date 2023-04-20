@@ -5,6 +5,9 @@ export default function Document() {
     <Html lang="en">
       <Head />
       <body>
+        {/* for modal  not needed here as react-modal package automatically
+        creates portal */}
+      <div id='overlays'></div>
         <Main />
         <NextScript />
       </body>
