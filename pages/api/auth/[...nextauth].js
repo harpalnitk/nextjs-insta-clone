@@ -17,6 +17,9 @@ export default NextAuth({
 
   callbacks: {
     async session({ session, token, user }) {
+      //google doesn't give username ;
+      //therefore we create our own username here in callback
+      console.log('token',token);
       session.user.username = session.user.name
         .split(" ")
         .join("")

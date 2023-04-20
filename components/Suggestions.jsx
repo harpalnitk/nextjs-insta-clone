@@ -16,7 +16,7 @@ export default function Suggestions() {
         }
       ))
       setSuggestions(suggestions);
-      console.log(suggestions);
+      //console.log(suggestions);
     },[]);
   return (
     <div className='mt-4 ml-10'>
@@ -25,7 +25,7 @@ export default function Suggestions() {
             <button className='text-gray-600 font-semibold'>See All</button>
         </div>
         {suggestions.map(suggestion=>(
-            <div className='flex items-center justify-between mt-3'>
+            <div key={suggestion.id} className='flex items-center justify-between mt-3'>
                 <img 
                 className='h-10 rounded-full border p-[2px]' 
                 src={suggestion.img} alt={suggestion.username} />

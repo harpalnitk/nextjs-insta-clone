@@ -40,3 +40,8 @@ also in tailwind.config.css add the following code
 ## Google client id and secret obtained from google.cloud.com - dashboard- credentials
 
 but first select your project created in firebase from the top dropdown on google.cloud.com
+
+## recoil 
+package like redux to manage global state
+
+>npm install recoil
