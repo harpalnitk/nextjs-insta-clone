@@ -5,9 +5,15 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'https://nextjs-insta-clone-rmsnzv70b-harpalnitk.vercel.app',
+        hostname: 'nextjs-insta-clone-rmsnzv70b-harpalnitk.vercel.app',
         port: '',
         pathname: '*/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'firebasestorage.googleapis.com',
+        port: '',
+        pathname: '/v0/b/nextjs-insta-clone-16003.appspot.com/o/insta-posts/**',
       },
     ],
   },
