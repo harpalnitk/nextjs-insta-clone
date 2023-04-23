@@ -58,3 +58,7 @@ By default all environment variables loaded through .env.local are only availabl
 In order to expose a variable to the browser, you have to prefix the variable with NEXT_PUBLIC_. For example:
 
 NEXT_PUBLIC_ANALYTICS_ID=abcdefghijk
+
+## react-moment for timestamps
+
+>npm install --save moment react-moment

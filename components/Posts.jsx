@@ -8,6 +8,7 @@ export default function Posts() {
 
     const [posts,setPosts] = useState([]);
 
+    //! TODO   fetch this on server using getServerSideProps
     useEffect(() => {
         //onsnapshot for real time updates from firestore
         const unsubscribe = onSnapshot(
@@ -17,7 +18,7 @@ export default function Posts() {
         );
         //unsubscribe from the subscription
         return unsubscribe;
-    },[])
+    },[db])
 
   return (
     <div>
