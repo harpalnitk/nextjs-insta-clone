@@ -14,14 +14,20 @@ export default function SignIn({providers}) {
     <Image 
     className='hidden object-cover rotate-6 md:inline-flex md:w-48' 
     src="/insta_image.png"
-    alt="Instagram Image" />
+    alt="Instagram Image" 
+    width={250}
+    height={250}
+    />
     <div className=''>
         {Object.values(providers).map(provider=>(
             <div key={provider.name} className='flex flex-col items-center'>
                 <Image 
                 className='w-32 object-cover'
                 src="/insta_logo.png" 
-                alt="Instagram Logo" />
+                alt="Instagram Logo"
+                width={150}
+                height={150}
+                 />
                 <p className='text-sm italic my-10 text-center'>This app is created for learning purpose</p>
                 
                 {/* we need to configure a redirect uri on google cloud before this works 

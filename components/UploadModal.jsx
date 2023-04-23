@@ -82,7 +82,8 @@ export default function UploadModal() {
               <Image
               onClick={()=>setSelectedFile(null)} 
               className='w-full max-h-[250px] object-cover cursor-pointer'
-              src={selectedFile} alt='image chosen for upload' />
+              src={selectedFile} alt='image chosen for upload'
+              fill />
             ) : (
               <CameraIcon
                 onClick={() => filePickerRef.current.click()}

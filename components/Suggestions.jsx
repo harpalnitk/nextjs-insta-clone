@@ -28,8 +28,10 @@ export default function Suggestions() {
         {suggestions.map(suggestion=>(
             <div key={suggestion.id} className='flex items-center justify-between mt-3'>
                 <Image 
-                className='h-10 rounded-full border p-[2px]' 
-                src={suggestion.img} alt={suggestion.username} />
+                className='h-10 w-10 rounded-full border p-[2px]' 
+                src={suggestion.img} alt={suggestion.username} 
+                height={150}
+                width={150}/>
                 <div className='flex-1 ml-4'>
                     <h2 className='font-semibold text-sm'>{suggestion.username}</h2>
                     <h3 className='font-sm text-gray-400 truncate w-[230px]'>{suggestion.jobTitle}</h3>

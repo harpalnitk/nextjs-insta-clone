@@ -71,16 +71,20 @@ setHasLiked(
 
       <div className='flex items-center p-5'>
         <Image
-          className='h-12 rounded-full object-cover border p-1 mr-3'
+          className='h-12 w-12 rounded-full object-cover border p-1 mr-3'
           src={userImg}
           alt={username}
+          width={100}
+          height={100}
         />
         <p className='font-bold flex-1'>{username}</p>
         <EllipsisHorizontalIcon className='h-5' />
       </div>
 
       {/* post image  */}
-      <Image className='object-cover w-full' src={img} alt={caption} />
+      <Image className='object-cover w-full' src={img} alt={caption}
+      width={500} 
+      height={500}/>
 
       {/* post buttons  */}
 

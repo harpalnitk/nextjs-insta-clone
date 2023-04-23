@@ -67,7 +67,9 @@ export default function Header() {
                 onClick={()=>signOut()}
                 src={session.user.image}
                 alt={session.user.name}
-                className='h-10 rounded-full cursor-pointer'
+                className='h-10 w-10 rounded-full cursor-pointer'
+                width={100}
+                height={100}
               />
             </>
           ) : (
