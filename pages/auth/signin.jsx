@@ -11,7 +11,7 @@ export default function SignIn({providers}) {
     <>
     <Header/>
    <div className=" flex justify-center space-x-7 mt-20">
-    <img 
+    <Image 
     className='hidden object-cover rotate-6 md:inline-flex md:w-48' 
     src="/insta_image.png"
     alt="Instagram Image" />

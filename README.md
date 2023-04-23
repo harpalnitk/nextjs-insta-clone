@@ -62,3 +62,5 @@ NEXT_PUBLIC_ANALYTICS_ID=abcdefghijk
 ## react-moment for timestamps
 
 >npm install --save moment react-moment
+
+On deployment to vercel also add the redirect URI for next-auth
