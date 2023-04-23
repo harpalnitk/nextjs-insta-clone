@@ -101,6 +101,11 @@ setHasLiked(
         </div>
       )}
 
+      {/*NUmber of Likes*/}
+      {likes.length > 0 && (
+        <p className='p-5 font-bold mb-1'>{likes.length} likes</p>
+      )}
+
       {/* post caption  */}
 
       <p className='p-5 truncate'>

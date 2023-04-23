@@ -1,12 +1,49 @@
-// import {getProviders, signIn} from 'next-auth';
 
-import { getProviders, signIn  } from "next-auth/react";
 import Header from "@/components/Header";
 import Image from "next/image";
+import {GoogleAuthProvider, getAuth, signInWithPopup} from 'firebase/auth'; 
+import { db } from "@/firebase";
+import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 
-//fetching providers on server because there it will be fast
-//on client also they can be fetched using useEffect
-export default function SignIn({providers}) {
+
+import { useRouter } from "next/router";
+export default function SignIn() {
+
+  const router = useRouter();
+
+  const onGoogleClick = async ()=> {
+try {
+  
+  const auth = getAuth();
+  const provider = new GoogleAuthProvider();
+  await signInWithPopup(auth, provider);
+  const user = auth.currentUser.providerData[0];
+  console.log('user in signin', user)
+  const docRef = doc(db,'insta-users',user.uid);
+  //check if user already exists
+  const docSnap = await getDoc(docRef);
+  console.log('docSnap', docSnap);
+  if(!docSnap.exists()){
+    console.log('docSnap does not exists', docSnap)
+    await setDoc(docRef,{
+      name:user.displayName,
+      email:user.email,
+      userImg: user.photoURL,
+      uid:user.uid,
+      timestamp: serverTimestamp(),
+      username:user.displayName.split(' ').join('').toLocaleLowerCase()
+
+    })
+  }
+  router.push('/');
+
+} catch (error) {
+  console.log(error)
+  
+}
+  }
+
+
   return (
     <>
     <Header/>
@@ -19,8 +56,8 @@ export default function SignIn({providers}) {
     height={250}
     />
     <div className=''>
-        {Object.values(providers).map(provider=>(
-            <div key={provider.name} className='flex flex-col items-center'>
+       
+            <div className='flex flex-col items-center'>
                 <Image 
                 className='w-32 object-cover'
                 src="/insta_logo.png" 
@@ -37,24 +74,13 @@ export default function SignIn({providers}) {
                 */}
                 
                 <button 
-                onClick={() => signIn(provider.id,{
-                    callbackUrl:"/"
-                })}
-                className='bg-red-400 rounded-lg p-3 text-white hover:bg-red-500'>Sign in with {provider.name}</button>
+                onClick={onGoogleClick}
+                className='bg-red-400 rounded-lg p-3 text-white hover:bg-red-500'>Sign in with Google</button>
             </div>
-        ))}
+      
     </div>
    </div>
    </>
   )
 }
 
-export async function getServerSideProps(context){
-  const providers = await getProviders();
-  //console.log("Providers", providers)
-  return {
-    props:{
-        providers
-      }
-  } 
-}
