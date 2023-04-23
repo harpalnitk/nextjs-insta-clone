@@ -2,6 +2,7 @@
 
 import { getProviders, signIn  } from "next-auth/react";
 import Header from "@/components/Header";
+import Image from "next/image";
 
 //fetching providers on server because there it will be fast
 //on client also they can be fetched using useEffect
@@ -17,7 +18,7 @@ export default function SignIn({providers}) {
     <div className=''>
         {Object.values(providers).map(provider=>(
             <div key={provider.name} className='flex flex-col items-center'>
-                <img 
+                <Image 
                 className='w-32 object-cover'
                 src="/insta_logo.png" 
                 alt="Instagram Logo" />

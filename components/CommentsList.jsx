@@ -24,7 +24,7 @@ export default function CommentsList(props) {
         );
     
         return unsubscribe;
-      }, [db,props.id]);
+      }, [props.id]);
   
       return (
         <>

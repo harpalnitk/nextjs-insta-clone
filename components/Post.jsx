@@ -23,6 +23,7 @@ import { useSession } from 'next-auth/react';
 import CommentInputBox from './CommentInputBox';
 import CommentsList from './CommentsList';
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 
 export default function Post({ id, username, userImg, caption, img }) {
@@ -42,7 +43,7 @@ return unsubscribe;
 setHasLiked(
   likes.findIndex(like => like.id  === session?.user.uid ) !== -1
 )
-  },[likes])
+  },[likes,session])
 
   const sendComment = async (comment) => {
     await addDoc(collection(db, 'insta-posts', id, 'comments'), {
@@ -69,7 +70,7 @@ setHasLiked(
       {/* post header  */}
 
       <div className='flex items-center p-5'>
-        <img
+        <Image
           className='h-12 rounded-full object-cover border p-1 mr-3'
           src={userImg}
           alt={username}
@@ -79,7 +80,7 @@ setHasLiked(
       </div>
 
       {/* post image  */}
-      <img className='object-cover w-full' src={img} alt={caption} />
+      <Image className='object-cover w-full' src={img} alt={caption} />
 
       {/* post buttons  */}
 

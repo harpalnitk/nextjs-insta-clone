@@ -1,5 +1,6 @@
 import {array,jobTitle,username} from 'minifaker';
 import 'minifaker/locales/en';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 export default function Suggestions() {
@@ -26,7 +27,7 @@ export default function Suggestions() {
         </div>
         {suggestions.map(suggestion=>(
             <div key={suggestion.id} className='flex items-center justify-between mt-3'>
-                <img 
+                <Image 
                 className='h-10 rounded-full border p-[2px]' 
                 src={suggestion.img} alt={suggestion.username} />
                 <div className='flex-1 ml-4'>
