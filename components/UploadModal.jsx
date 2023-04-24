@@ -1,21 +1,24 @@
 import { modalState } from '@/atom/modalAtom';
-import { useRecoilState } from 'recoil';
+
 import Modal from 'react-modal';
 import { CameraIcon } from '@heroicons/react/24/outline';
 import { useRef, useState } from 'react';
 import { addDoc, collection, doc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { db, storage } from '@/firebase';
-import { useSession } from 'next-auth/react';
+// import { useSession } from 'next-auth/react';
 import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 import Image from 'next/image';
+
+import { useRecoilState } from 'recoil';
+import { userState } from '@/atom/userAtom';
 
 export default function UploadModal() {
   const [open, setOpen] = useRecoilState(modalState);
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
-
+  const [currentUser] = useRecoilState(userState);
   //auth session
-  const {data:session} = useSession();
+  // const {data:session} = useSession();
   
 
   Modal.setAppElement('#overlays');
@@ -24,7 +27,7 @@ export default function UploadModal() {
   const captionInputRef = useRef(null);
 
   function addImageToPost(e){
-    console.log('inside add image to post')
+    //console.log('inside add image to post')
     const reader = new FileReader();
     if (e.target.files[0]) {
       reader.readAsDataURL(e.target.files[0]);
@@ -41,8 +44,8 @@ export default function UploadModal() {
       
       const docRef = await addDoc(collection(db,'insta-posts'),{
         caption:captionInputRef.current.value,
-        username: session.user.username,
-        profileImg: session.user.image,
+        username: currentUser?.username,
+        profileImg: currentUser?.userImg,
         timestamp: serverTimestamp()
       })
 
@@ -83,7 +86,8 @@ export default function UploadModal() {
               onClick={()=>setSelectedFile(null)} 
               className='w-full max-h-[250px] object-cover cursor-pointer'
               src={selectedFile} alt='image chosen for upload'
-              fill />
+              width={200}
+              height={200}/>
             ) : (
               <CameraIcon
                 onClick={() => filePickerRef.current.click()}

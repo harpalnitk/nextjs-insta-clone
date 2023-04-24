@@ -23,32 +23,29 @@ export default function Header() {
   const [currentUser, setCurrentUser] = useRecoilState(userState);
 
   const router = useRouter();
-
-  useEffect(()=>{
-const auth = getAuth();
-
-onAuthStateChanged(auth, (user)=>{
-  console.log('user', user);
-  if(user){
-    const uid = auth.currentUser.providerData[0].uid;
-    const fetchUser = async ()=> {
-        const docRef = doc(db,'insta-users',uid);
-        const docSnap = await getDoc(docRef);
-        if(docSnap.exists){
+  const auth = getAuth();
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      //console.log('user', user);
+      if (user) {
+        const uid = auth.currentUser?.providerData[0].uid;
+        const fetchUser = async () => {
+          const docRef = doc(db, 'insta-users', uid);
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists) {
             setCurrentUser(docSnap.data());
-            console.log(currentUser);
-        }
-    }
-    fetchUser();
-  }
-})
-  },[]);
-
+           // console.log(currentUser);
+          }
+        };
+        fetchUser();
+      }
+    });
+  }, []);
 
   const onSignOut = async () => {
-     await signOut(auth);
-     setCurrentUser(null)
-  }
+    await signOut(auth);
+    setCurrentUser(null);
+  };
 
   return (
     <div className='shadow-sm border-b sticky top-0 bg-white z-30'>
@@ -60,7 +57,7 @@ onAuthStateChanged(auth, (user)=>{
             fill
             className='object-contain'
             alt='logo'
-            onClick={()=>router.push('/')}
+            onClick={() => router.push('/')}
           />
         </div>
         <div className='cursor-pointer h-24 w-24 relative  lg:hidden'>
@@ -69,7 +66,7 @@ onAuthStateChanged(auth, (user)=>{
             fill
             className='object-contain'
             alt='logo'
-            onClick={()=>router.push('/')}
+            onClick={() => router.push('/')}
           />
         </div>
         {/* Middle  */}
@@ -86,25 +83,27 @@ onAuthStateChanged(auth, (user)=>{
 
         {/* Right  */}
         <div className='flex space-x-4 items-center'>
-          <HomeIcon className='hidden md:inline-flex h-6 cursor-pointer hover:scale-125 transition-transform duration-200 ease-out' 
-          onClick={()=>router.push('/')}
+          <HomeIcon
+            className='hidden md:inline-flex h-6 cursor-pointer hover:scale-125 transition-transform duration-200 ease-out'
+            onClick={() => router.push('/')}
           />
           {currentUser ? (
             <>
-              <PlusCircleIcon 
-              onClick={()=>setOpen(true)}
-              className='h-6 cursor-pointer hover:scale-125 transition-transform duration-200 ease-out' />
+              <PlusCircleIcon
+                onClick={() => setOpen(true)}
+                className='h-6 cursor-pointer hover:scale-125 transition-transform duration-200 ease-out'
+              />
               <Image
                 onClick={onSignOut}
-                src={session.user.image}
-                alt={session.user.name}
+                src={currentUser?.userImg}
+                alt={currentUser?.username || 'user-image'}
                 className='h-10 w-10 rounded-full cursor-pointer'
                 width={100}
                 height={100}
               />
             </>
           ) : (
-            <button onClick={()=>router.pudh('/auth/signin')}>Sign in</button>
+            <button onClick={() => router.push('/auth/signin')}>Sign in</button>
           )}
         </div>
       </div>

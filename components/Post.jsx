@@ -17,19 +17,23 @@ import {
   setDoc,
 } from 'firebase/firestore';
 
-import { useSession } from 'next-auth/react';
+//import { useSession } from 'next-auth/react';
 
 
 import CommentInputBox from './CommentInputBox';
 import CommentsList from './CommentsList';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { useRecoilState } from 'recoil';
+import { userState } from '@/atom/userAtom';
 
 
 export default function Post({ id, username, userImg, caption, img }) {
-  const { data: session } = useSession();
+ // const { data: session } = useSession();
   const [hasLiked,setHasLiked] = useState(false);
   const [likes,setLikes] = useState([]);
+
+  const [currentUser] = useRecoilState(userState);
 
   useEffect(()=>{
 const unsubscribe = onSnapshot(
@@ -41,15 +45,15 @@ return unsubscribe;
 
   useEffect(()=>{
 setHasLiked(
-  likes.findIndex(like => like.id  === session?.user.uid ) !== -1
+  likes.findIndex(like => like.id  === currentUser?.uid ) !== -1
 )
-  },[likes,session])
+  },[likes,currentUser])
 
   const sendComment = async (comment) => {
     await addDoc(collection(db, 'insta-posts', id, 'comments'), {
       comment: comment,
-      username: session.user.username,
-      userImage: session.user.image,
+      username: currentUser?.username,
+      userImage: currentUser?.userImg,
       timestamp: serverTimestamp(),
     });
   };
@@ -57,10 +61,10 @@ setHasLiked(
   const likePost = async () => {
     //we are modifying ,so setdoc used instead of addodc
     if(hasLiked){
-      await deleteDoc(doc(db,'insta-posts',id,'likes',session.user.uid))
+      await deleteDoc(doc(db,'insta-posts',id,'likes',currentUser?.uid))
     }else{
-      await setDoc(doc(db,'insta-posts',id,'likes',session.user.uid),{
-        username:session.user.username
+      await setDoc(doc(db,'insta-posts',id,'likes',currentUser?.uid),{
+        username:currentUser?.username
       })
     }
   }
@@ -88,7 +92,7 @@ setHasLiked(
 
       {/* post buttons  */}
 
-      {session && (
+      {currentUser && (
         <div className='flex justify-between px-4 pt-4'>
           <div className='flex space-x-4'>
             {hasLiked ? (<HeartIconSolid onClick={likePost} className='text-red-400 btn' />):
@@ -119,7 +123,7 @@ setHasLiked(
 
       {/* comment input box  */}
 
-      {session && (
+      {currentUser && (
        <CommentInputBox onPost={sendComment}/>
       )}
     </div>

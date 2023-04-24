@@ -18,13 +18,13 @@ try {
   const provider = new GoogleAuthProvider();
   await signInWithPopup(auth, provider);
   const user = auth.currentUser.providerData[0];
-  console.log('user in signin', user)
+  //console.log('user in signin', user)
   const docRef = doc(db,'insta-users',user.uid);
   //check if user already exists
   const docSnap = await getDoc(docRef);
-  console.log('docSnap', docSnap);
+  //console.log('docSnap', docSnap);
   if(!docSnap.exists()){
-    console.log('docSnap does not exists', docSnap)
+   // console.log('docSnap does not exists', docSnap)
     await setDoc(docRef,{
       name:user.displayName,
       email:user.email,
